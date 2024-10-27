@@ -9,6 +9,8 @@ async function main() {
       return prisma.user.create({
         data: {
           clerkId: `clerk_test_user_${i + 1}`,
+          email: `test_user_${i + 1}@mail.com`,
+          username: `test_user_${i + 1}`,
         },
       });
     })
@@ -23,6 +25,8 @@ async function main() {
           content: `This is the content of test article ${i + 1}.`,
           userId: authors[i % authors.length]!.id,
           isPublished: true,
+          readTime: 5,
+          brief: `This is a brief for test article ${i + 1}.`,
         },
       });
     })

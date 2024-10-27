@@ -13,6 +13,8 @@ datasource db {
 model User {
   id           String        @id @default(uuid())
   clerkId      String        @unique
+  username     String?       // Optional username
+  email        String?       @unique // Optional user email
   posts        Post[]
   comments     Comment[]
   postLikes    PostLike[]
@@ -22,16 +24,18 @@ model User {
 }
 
 model Post {
-  id          String     @id @default(uuid())
-  userId      String
-  user        User       @relation(fields: [userId], references: [id])
-  title       String
-  content     String
-  isPublished Boolean    @default(false)
-  comments    Comment[]
-  postLikes   PostLike[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id             String     @id @default(uuid())
+  userId         String
+  user           User       @relation(fields: [userId], references: [id])
+  title          String
+  content        String
+  brief          String     @db.VarChar(150) // Brief description, max 150 chars
+  readTime       Int        // Estimated read time in minutes
+  isPublished    Boolean    @default(false)
+  comments       Comment[]
+  postLikes      PostLike[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 }
 
 model Comment {
@@ -40,7 +44,7 @@ model Comment {
   post         Post          @relation(fields: [postId], references: [id])
   userId       String
   user         User          @relation(fields: [userId], references: [id])
-  parentId     String? // For nested comments
+  parentId     String?       // For nested comments
   parent       Comment?      @relation("CommentReplies", fields: [parentId], references: [id])
   replies      Comment[]     @relation("CommentReplies")
   content      String

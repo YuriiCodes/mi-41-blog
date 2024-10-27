@@ -10,7 +10,7 @@ export const postRouter = createTRPCRouter({
         content: z.string().min(1),
         userId: z.string(), // Reference to the user creating the post
         isPublished: z.boolean().optional().default(false),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       return ctx.db.post.create({
@@ -39,5 +39,19 @@ export const postRouter = createTRPCRouter({
     });
 
     return post ?? null;
+  }),
+
+  getAll: publicProcedure.query(async ({ ctx }) => {
+    return ctx.db.post.findMany({
+      include: {
+        user: true,
+        comments: {
+          include: {
+            user: true,
+          },
+        },
+        postLikes: true,
+      },
+    });
   }),
 });
