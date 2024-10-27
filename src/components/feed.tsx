@@ -11,14 +11,14 @@ import {
 import { Badge } from "~/components/ui/badge";
 import { CalendarIcon, ClockIcon } from "lucide-react";
 import { api } from "~/trpc/server";
-import Link from "next/link";
+import { Link as TransitionLink } from "next-view-transitions"
 
 export const Feed = async () => {
   const posts = await api.post.getAll();
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {posts.map((post, index) => (
-        <Link href={`/read/${post.id}`} key={post.id}>
+        <TransitionLink href={`/read/${post.id}`} key={post.id}>
           <Card key={index} className="flex flex-col">
             <CardHeader>
               <CardTitle>{post.title}</CardTitle>
@@ -38,7 +38,7 @@ export const Feed = async () => {
               </div>
             </CardFooter>
           </Card>
-        </Link>
+        </TransitionLink>
       ))}
     </div>
   );

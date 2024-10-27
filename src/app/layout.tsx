@@ -8,6 +8,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { HydrateClient } from "~/trpc/server";
 import { Header } from "~/components/blog-header";
 import { SyncUser } from "~/components/sync-user";
+import { ViewTransitions } from "next-view-transitions";
 
 export const metadata: Metadata = {
   title: "Mi-Blog",
@@ -20,17 +21,19 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${GeistSans.variable}`}>
-        <body>
-          <TRPCReactProvider>
-            <HydrateClient>
-              <Header />
-              <main className="container mx-auto px-4 py-8">{children}</main>
-              <SyncUser />
-            </HydrateClient>
-          </TRPCReactProvider>
-        </body>
-      </html>
+      <ViewTransitions>
+        <html lang="en" className={`${GeistSans.variable}`}>
+          <body>
+            <TRPCReactProvider>
+              <HydrateClient>
+                <Header />
+                <main className="container mx-auto px-4 py-8">{children}</main>
+                <SyncUser />
+              </HydrateClient>
+            </TRPCReactProvider>
+          </body>
+        </html>
+      </ViewTransitions>
     </ClerkProvider>
   );
 }
