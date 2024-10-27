@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const userRouter = createTRPCRouter({
   // Get user by Clerk ID
@@ -18,6 +22,30 @@ export const userRouter = createTRPCRouter({
       return ctx.db.user.create({
         data: {
           clerkId: input.clerkId,
+        },
+      });
+    }),
+
+  // upsert:
+  upsert: protectedProcedure
+    .input(
+      z.object({
+        clerkId: z.string(),
+        username: z.string(),
+        email: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.user.upsert({
+        where: { clerkId: input.clerkId },
+        create: {
+          clerkId: input.clerkId,
+          username: input.username,
+          email: input.email,
+        },
+        update: {
+          username: input.username,
+          email: input.email,
         },
       });
     }),

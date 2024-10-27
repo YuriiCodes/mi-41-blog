@@ -7,6 +7,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { HydrateClient } from "~/trpc/server";
 import { Header } from "~/components/blog-header";
+import { SyncUser } from "~/components/sync-user";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -25,6 +26,7 @@ export default function RootLayout({
             <HydrateClient>
               <Header />
               <main className="container mx-auto px-4 py-8">{children}</main>
+              <SyncUser />
             </HydrateClient>
           </TRPCReactProvider>
         </body>

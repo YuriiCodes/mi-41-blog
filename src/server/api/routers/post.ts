@@ -10,6 +10,8 @@ export const postRouter = createTRPCRouter({
         content: z.string().min(1),
         userId: z.string(), // Reference to the user creating the post
         isPublished: z.boolean().optional().default(false),
+        brief: z.string().min(1).max(150),
+        readTime: z.number().default(0),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -19,6 +21,8 @@ export const postRouter = createTRPCRouter({
           content: input.content,
           userId: input.userId,
           isPublished: input.isPublished,
+          brief: input.brief,
+          readTime: input.readTime,
         },
       });
     }),
