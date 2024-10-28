@@ -18,7 +18,7 @@ export const Feed = async () => {
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {posts.map((post, index) => (
-        <TransitionLink href={`/read/${post.id}`} key={post.id}>
+        <TransitionLink href={`/read/${post.slug}`} key={post.slug}>
           <Card key={index} className="flex flex-col">
             <CardHeader>
               <CardTitle>{post.title}</CardTitle>

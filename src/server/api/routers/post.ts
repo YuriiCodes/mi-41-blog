@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import xss from "xss";
 
 export const postRouter = createTRPCRouter({
     // Create a new post
@@ -11,6 +12,7 @@ export const postRouter = createTRPCRouter({
           userId: z.string(), // Reference to the user creating the post
           isPublished: z.boolean().optional().default(false),
           brief: z.string().min(1).max(150),
+          slug: z.string().min(1),
           readTime: z.number().default(0)
         })
       )
@@ -18,24 +20,25 @@ export const postRouter = createTRPCRouter({
         return ctx.db.post.create({
           data: {
             title: input.title,
-            content: input.content,
+            content: xss(input.content),
             userId: input.userId,
             isPublished: input.isPublished,
             brief: input.brief,
-            readTime: input.readTime
+            readTime: input.readTime,
+            slug: input.slug
           }
         });
       }),
 
-    getById: publicProcedure
+    getBySlug: publicProcedure
       .input(
         z.object({
-          id: z.string()
+          slug: z.string()
         })
       ).query(async ({ ctx, input }) => {
           return ctx.db.post.findUnique({
             where: {
-              id: input.id
+              slug: input.slug
             },
             include: {
               user: true,

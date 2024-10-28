@@ -5,8 +5,8 @@ import { notFound } from "next/navigation";
 // This is a server component
 const ReadPage: FC<{ params: { slug: string } }> = async ({ params }) => {
   const { slug } = params;
-  const blog = await api.post.getById({
-    id: slug,
+  const blog = await api.post.getBySlug({
+    slug,
   });
 
   // Fetch data using the ID from the server (if needed)

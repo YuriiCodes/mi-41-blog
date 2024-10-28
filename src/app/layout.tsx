@@ -9,6 +9,7 @@ import { HydrateClient } from "~/trpc/server";
 import { Header } from "~/components/blog-header";
 import { SyncUser } from "~/components/sync-user";
 import { ViewTransitions } from "next-view-transitions";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Mi-Blog",
@@ -28,6 +29,7 @@ export default function RootLayout({
               <HydrateClient>
                 <Header />
                 <main className="container mx-auto px-4 py-8">{children}</main>
+                <Toaster />
                 <SyncUser />
               </HydrateClient>
             </TRPCReactProvider>

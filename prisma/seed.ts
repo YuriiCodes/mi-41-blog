@@ -22,8 +22,9 @@ async function main() {
       return prisma.post.create({
         data: {
           title: `Test Article ${i + 1}`,
+          slug: `test-article-${i + 1}`,
           content: `This is the content of test article ${i + 1}.`,
-          userId: authors[i % authors.length]!.id,
+          userId: authors[i % authors.length]!.clerkId,
           isPublished: true,
           readTime: 5,
           brief: `This is a brief for test article ${i + 1}.`,
@@ -39,7 +40,7 @@ async function main() {
         return prisma.comment.create({
           data: {
             postId: article.id,
-            userId: authors[i % authors.length]!.id,
+            userId: authors[i % authors.length]!.clerkId,
             content: `This is a comment ${i + 1} for article ${article.title}.`,
           },
         });
