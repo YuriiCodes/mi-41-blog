@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import xss from "xss";
+import readingTime from "reading-time";
 
 export const postRouter = createTRPCRouter({
     // Create a new post
@@ -13,7 +14,6 @@ export const postRouter = createTRPCRouter({
           isPublished: z.boolean().optional().default(false),
           brief: z.string().min(1).max(150),
           slug: z.string().min(1),
-          readTime: z.number().default(0)
         })
       )
       .mutation(async ({ ctx, input }) => {
@@ -24,7 +24,7 @@ export const postRouter = createTRPCRouter({
             userId: input.userId,
             isPublished: input.isPublished,
             brief: input.brief,
-            readTime: input.readTime,
+            readTime: readingTime(input.content).minutes,
             slug: input.slug
           }
         });
