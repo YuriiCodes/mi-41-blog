@@ -17,7 +17,6 @@ import { api } from "~/trpc/react";
 import { SignedIn, SignedOut, SignInButton, useUser } from "@clerk/nextjs";
 import toast from "react-hot-toast";
 
-
 interface CommentsProps {
   comments?: FeComment[];
   postId: string;
@@ -30,14 +29,14 @@ export function Comments({ comments, postId }: CommentsProps) {
 
   const util = api.useUtils();
   const { mutateAsync } = api.comment.create.useMutation({
-    onSuccess:() => {
+    onSuccess: () => {
       void util.comment.invalidate();
-    }
+    },
   });
 
   const handleSubmitComment = (parentId: string | undefined = undefined) => {
     if (!user) toast.error("You must be logged in to comment");
-    console.log('userID', user?.id);
+    console.log("userID", user?.id);
     const promise = mutateAsync({
       content: newComment,
       postId,
@@ -69,16 +68,18 @@ export function Comments({ comments, postId }: CommentsProps) {
         <CardContent>
           <p>{comment.content}</p>
         </CardContent>
-        <CardFooter>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setReplyingTo(comment.id)}
-          >
-            <MessageSquare className="mr-2 h-4 w-4" />
-            Reply
-          </Button>
-        </CardFooter>
+        <SignedIn>
+          <CardFooter>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setReplyingTo(comment.id)}
+            >
+              <MessageSquare className="mr-2 h-4 w-4" />
+              Reply
+            </Button>
+          </CardFooter>
+        </SignedIn>
         {replyingTo === comment.id && (
           <CardContent>
             <Textarea
@@ -102,7 +103,6 @@ export function Comments({ comments, postId }: CommentsProps) {
       <h2 className="mb-4 text-2xl font-semibold">Comments</h2>
       {renderComments(comments)}
 
-
       <Card className="mt-8">
         <SignedOut>
           <CardTitle>Sign in to leave a comment</CardTitle>
@@ -111,21 +111,20 @@ export function Comments({ comments, postId }: CommentsProps) {
           </CardContent>
         </SignedOut>
         <SignedIn>
-        <CardHeader>
-          <CardTitle>Leave a Comment</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Textarea
-            placeholder="Write your comment here..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            className="mb-2"
-          />
-          <Button onClick={() => handleSubmitComment()}>Post Comment</Button>
-        </CardContent>
+          <CardHeader>
+            <CardTitle>Leave a Comment</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Textarea
+              placeholder="Write your comment here..."
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              className="mb-2"
+            />
+            <Button onClick={() => handleSubmitComment()}>Post Comment</Button>
+          </CardContent>
         </SignedIn>
       </Card>
-
     </div>
   );
 }
