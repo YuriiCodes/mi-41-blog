@@ -47,7 +47,6 @@ export const postRouter = createTRPCRouter({
                   user: true
                 }
               },
-              postLikes: true
             }
           });
         }
@@ -64,7 +63,6 @@ export const postRouter = createTRPCRouter({
               user: true // Include user who commented
             }
           },
-          postLikes: true // Include post likes
         }
       });
 
@@ -80,8 +78,7 @@ export const postRouter = createTRPCRouter({
             include: {
               user: true
             }
-          },
-          postLikes: true
+          }
         }
       });
     }),

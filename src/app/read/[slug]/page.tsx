@@ -14,7 +14,7 @@ const ReadPage: FC<{ params: { slug: string } }> = async ({ params }) => {
   // Example: const data = await fetchData(ID);
 
   // 404:
-  if (!blog || !blog.content) {
+  if (!blog?.content) {
     return notFound();
   }
   console.log('blog', blog);

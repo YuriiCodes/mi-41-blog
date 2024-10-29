@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import Editor from "react-simple-wysiwyg";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
