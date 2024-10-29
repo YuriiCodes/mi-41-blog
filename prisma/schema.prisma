@@ -16,8 +16,6 @@ model User {
   email        String?       @unique // Optional user email
   posts        Post[]
   comments     Comment[]
-  postLikes    PostLike[]
-  commentLikes CommentLike[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }
@@ -33,7 +31,6 @@ model Post {
   readTime       Int        // Estimated read time in minutes
   isPublished    Boolean    @default(false)
   comments       Comment[]
-  postLikes      PostLike[]
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   @@index([slug])
@@ -49,25 +46,7 @@ model Comment {
   parent       Comment?      @relation("CommentReplies", fields: [parentId], references: [id])
   replies      Comment[]     @relation("CommentReplies")
   content      String
-  commentLikes CommentLike[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }
 
-model PostLike {
-  id        String   @id @default(uuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [clerkId])
-  postId    String
-  post      Post     @relation(fields: [postId], references: [id])
-  createdAt DateTime @default(now())
-}
-
-model CommentLike {
-  id        String   @id @default(uuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [clerkId])
-  commentId String
-  comment   Comment  @relation(fields: [commentId], references: [id])
-  createdAt DateTime @default(now())
-}
