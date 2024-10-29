@@ -14,7 +14,7 @@ import { Textarea } from "~/components/ui/textarea";
 import { MessageSquare } from "lucide-react";
 import { type FeComment } from "~/types";
 import { api } from "~/trpc/react";
-import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, useUser } from "@clerk/nextjs";
 import toast from "react-hot-toast";
 
 
@@ -106,6 +106,9 @@ export function Comments({ comments, postId }: CommentsProps) {
       <Card className="mt-8">
         <SignedOut>
           <CardTitle>Sign in to leave a comment</CardTitle>
+          <CardContent>
+            <SignInButton />
+          </CardContent>
         </SignedOut>
         <SignedIn>
         <CardHeader>
