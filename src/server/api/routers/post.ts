@@ -73,6 +73,7 @@ export const postRouter = createTRPCRouter({
 
     getAll: publicProcedure.query(async ({ ctx }) => {
       return ctx.db.post.findMany({
+        orderBy: { createdAt: "desc" },
         include: {
           user: true,
           comments: {

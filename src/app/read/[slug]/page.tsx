@@ -2,6 +2,7 @@ import { type FC } from "react";
 import { api } from "~/trpc/server";
 import { BlogContent } from "~/components/blog-content";
 import { notFound } from "next/navigation";
+
 // This is a server component
 const ReadPage: FC<{ params: { slug: string } }> = async ({ params }) => {
   const { slug } = params;
@@ -16,10 +17,11 @@ const ReadPage: FC<{ params: { slug: string } }> = async ({ params }) => {
   if (!blog || !blog.content) {
     return notFound();
   }
+  console.log('blog', blog);
   return (
     <div>
       <h1>Reading ID: {slug}</h1>
-      <BlogContent content={blog.content} />
+      <BlogContent content={blog.content} comments={blog.comments} postId={blog.id}/>
     </div>
   );
 };

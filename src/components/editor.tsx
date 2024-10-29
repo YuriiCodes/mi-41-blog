@@ -102,7 +102,7 @@ export const EditorWYSIWYF: FC<Props> = ({ userId }) => {
       </div>
 
       {mode === pageMode.view ? (
-        <BlogContent content={getValues("content")} />
+        <BlogContent content={getValues("content")} isShowComments={false}/>
       ) : (
         <form
           onSubmit={handleSubmit(onSubmit)}
