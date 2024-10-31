@@ -3,6 +3,7 @@ import { Comments } from "~/components/blog-post";
 
 import { transformComments } from "~/utils/comments";
 import { type BackendComment } from "~/types";
+import { shouldShowComments } from "~/utils/shouldShowComments";
 
 interface Props {
   content: string;
@@ -22,8 +23,12 @@ export const BlogContent: FC<Props> = async ({
       className={"prose lg:prose-xl"}
       dangerouslySetInnerHTML={{ __html: content }}
     />
-    {isShowComments && postId && (
-      <Comments postId={postId} comments={transformComments(comments)} />
-    )}
+    {shouldShowComments({
+      isShowComments,
+      postId,
+    }) &&
+      postId && (
+        <Comments postId={postId} comments={transformComments(comments)} />
+      )}
   </>
 );
