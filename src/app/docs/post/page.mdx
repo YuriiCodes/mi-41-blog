@@ -1,0 +1,90 @@
+import { Link as TransitionLink } from "next-view-transitions"
+
+<div class="prose lg:prose-xl">
+
+<TransitionLink href="/docs">
+Back to the root
+</TransitionLink>
+# Post Router Documentation
+
+This router manages CRUD operations for posts in the application. The following endpoints are available:
+
+## **Endpoints**
+
+### **Create Post**
+Creates a new post with specified details.
+
+#### **Input**
+```typescript
+{
+  title: string; // required
+  content: string; // required
+  userId: string; // required, reference to user creating the post
+  isPublished?: boolean; // optional, defaults to false
+  brief: string; // required, max 150 characters
+  slug: string; // required, URL-friendly identifier
+}
+```
+
+#### **Response**
+Returns the newly created post.
+
+#### **Example Usage**
+```typescript
+await trpc.postRouter.create({
+  title: "Sample Post",
+  content: "This is the content of the post.",
+  userId: "user-id-123",
+  isPublished: true,
+  brief: "A brief description",
+  slug: "sample-post",
+});
+```
+
+---
+
+### **Get Post by Slug**
+Fetches a post by its slug, including user and comments data.
+
+#### **Input**
+```typescript
+{
+  slug: string;
+}
+```
+
+#### **Response**
+Returns the post with the specified slug, including user details and comments.
+
+#### **Example Usage**
+```typescript
+await trpc.postRouter.getBySlug({ slug: "sample-post" });
+```
+
+---
+
+### **Get Latest Post**
+Fetches the most recent post in the system.
+
+#### **Response**
+Returns the latest post, including user and comments data.
+
+#### **Example Usage**
+```typescript
+await trpc.postRouter.getLatest();
+```
+
+---
+
+### **Get All Posts**
+Fetches all posts in the system.
+
+#### **Response**
+Returns an array of posts, including user and comments data.
+
+#### **Example Usage**
+```typescript
+await trpc.postRouter.getAll();
+```
+
+</div>

@@ -1,0 +1,93 @@
+import { Link as TransitionLink } from "next-view-transitions"
+
+<div class="prose lg:prose-xl">
+
+<TransitionLink href="/docs">
+Back to the root
+</TransitionLink>
+
+
+# User Router Documentation
+
+This router handles user-related operations in the application.
+
+## **Endpoints**
+
+### **Get User by Clerk ID**
+Fetches user details by Clerk ID.
+
+#### **Input**
+```typescript
+{
+  clerkId: string;
+}
+```
+
+#### **Response**
+Returns the user associated with the specified Clerk ID.
+
+#### **Example Usage**
+```typescript
+await trpc.userRouter.getByClerkId({ clerkId: "clerk-id-123" });
+```
+
+---
+
+### **Create User**
+Creates a new user with the given Clerk ID.
+
+#### **Input**
+```typescript
+{
+  clerkId: string;
+}
+```
+
+#### **Response**
+Returns the newly created user.
+
+#### **Example Usage**
+```typescript
+await trpc.userRouter.create({ clerkId: "clerk-id-123" });
+```
+
+---
+
+### **Upsert User**
+Creates or updates a user based on Clerk ID.
+
+#### **Input**
+```typescript
+{
+  clerkId: string;
+  username: string;
+  email: string;
+}
+```
+
+#### **Response**
+Returns the updated or newly created user.
+
+#### **Example Usage**
+```typescript
+await trpc.userRouter.upsert({
+  clerkId: "clerk-id-123",
+  username: "john_doe",
+  email: "john@example.com"
+});
+```
+
+---
+
+### **Get All Users**
+Fetches all users in the system.
+
+#### **Response**
+Returns an array of users.
+
+#### **Example Usage**
+```typescript
+await trpc.userRouter.getAll();
+```
+
+</div>

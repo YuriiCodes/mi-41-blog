@@ -1,0 +1,82 @@
+import { Link as TransitionLink } from "next-view-transitions"
+
+<div class="prose lg:prose-xl">
+
+<TransitionLink href="/docs">
+Back to the root
+</TransitionLink>
+
+# Comment Router Documentation
+
+This router manages CRUD operations for comments.
+
+## **Endpoints**
+
+### **Create Comment**
+Creates a new comment for a post.
+
+#### **Input**
+```typescript
+{
+  postId: string; // required
+  userId: string; // required
+  content: string; // required
+  parentId?: string; // optional, for nested comments
+}
+```
+
+#### **Response**
+Returns the newly created comment.
+
+#### **Example Usage**
+```typescript
+await trpc.commentRouter.create({
+  postId: "post-id-123",
+  userId: "user-id-456",
+  content: "This is a comment",
+  parentId: "parent-comment-id"
+});
+```
+
+---
+
+### **Get Comments by Post ID**
+Fetches all comments for a specific post.
+
+#### **Input**
+```typescript
+{
+  postId: string;
+}
+```
+
+#### **Response**
+Returns an array of comments for the specified post.
+
+#### **Example Usage**
+```typescript
+await trpc.commentRouter.getByPostId({ postId: "post-id-123" });
+```
+
+---
+
+### **Get Comment by ID**
+Fetches a specific comment by its ID.
+
+#### **Input**
+```typescript
+{
+  id: string;
+}
+```
+
+#### **Response**
+Returns the comment with the specified ID.
+
+#### **Example Usage**
+```typescript
+await trpc.commentRouter.getById({ id: "comment-id-789" });
+```
+
+
+</div>
